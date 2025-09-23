@@ -3,6 +3,8 @@
 import { cookies } from "next/headers";
 import { User, users } from "./users";
 import { redirect } from "next/navigation";
+import { generateAccessToken, generateRefreshToken } from "./jwt";
+import { jwtVerify } from "jose";
 
 export async function authenticate(_state: unknown, formData: FormData) {
   console.log("state", _state, "FORM DATA", formData.get("email"));
@@ -16,12 +18,38 @@ export async function authenticate(_state: unknown, formData: FormData) {
   if (!user) {
     return "Invalid user";
   }
+  //----------- session based login----------- \\
+  // cookies().set("currentUser", JSON.stringify(user), {
+  //   httpOnly: true,
+  //   path: "/",
+  //   maxAge: 60 * 60, // 1h
+  // });
+  // redirect("/dashboard");
 
-  cookies().set("currentUser", JSON.stringify(user), {
+  //---------- jwt based login--------------- \\
+
+  const accessToken = await generateAccessToken({
+    userId: user.id,
+    email: user.email,
+    role: user.role,
+  });
+
+  const refreshToken = await generateRefreshToken({
+    userId: user.id,
+  });
+
+  cookies().set("refreshToken", refreshToken, {
     httpOnly: true,
     path: "/",
-    maxAge: 60 * 60, // 1h
+    maxAge: 60 * 60 * 24 * 2, // 2 days
   });
+
+  cookies().set("accessToken", accessToken, {
+    httpOnly: true,
+    path: "/",
+    maxAge: 60 * 1, // 1 minute
+  });
+
   redirect("/dashboard");
 }
 
@@ -30,7 +58,33 @@ export async function getSession() {
   return cookie ? JSON.parse(cookie) : null;
 }
 
+// export async function getJWTSession() {
+//   const cookie = cookies().get("accessToken")?.value;
+//   return cookie ? JSON.parse(cookie) : null;
+// }
+
+export async function getJWTSession() {
+  const token = cookies().get("accessToken")?.value;
+  if (!token) return null;
+
+  try {
+    const { payload } = await jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.ACCESS_TOKEN_SECRET!)
+    );
+    return payload;
+  } catch {
+    return null;
+  }
+}
+
+// export async function logout() {
+//   cookies().delete("currentUser");
+//   redirect("/");
+// }
+
 export async function logout() {
-  cookies().delete("currentUser");
-  redirect("/");
+  cookies().delete("accessToken");
+  cookies().delete("refreshToken");
+  redirect("/login");
 }
