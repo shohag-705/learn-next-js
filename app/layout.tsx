@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
-import { getSession, logout } from "@/lib/actions";
+import { getJWTSession, logout } from "@/lib/actions";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +14,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getSession();
+  // const session = await getSession();
+  const session = await getJWTSession();
+
   return (
     <html
       lang="en"
