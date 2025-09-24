@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import { jwtVerify, SignJWT } from "jose";
 
 const encoder = new TextEncoder();
@@ -63,7 +62,7 @@ export async function verifyAccessToken(token: string) {
       token,
       encoder.encode(ACCESS_TOKEN_SECRET!)
     );
-    return payload; // decoded claims
+    return payload;
   } catch (e) {
     console.error("verifyAccessToken error:", e);
     return null;
