@@ -5,6 +5,7 @@ import { User, users } from "./users";
 import { redirect } from "next/navigation";
 import { generateAccessToken, generateRefreshToken } from "./jwt";
 import { jwtVerify } from "jose";
+import { hasRole } from "@/app/utils/auth";
 
 export async function authenticate(_state: unknown, formData: FormData) {
   console.log("state", _state, "FORM DATA", formData.get("email"));
@@ -27,6 +28,10 @@ export async function authenticate(_state: unknown, formData: FormData) {
   // redirect("/dashboard");
 
   //---------- jwt based login--------------- \\
+
+  if (!hasRole(user.role, ["admin", "user"])) {
+    redirect("unauthorized");
+  }
 
   const accessToken = await generateAccessToken({
     userId: user.id,

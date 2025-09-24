@@ -4,6 +4,7 @@ import {
   verifyAccessToken,
   verifyRefreshToken,
 } from "./lib/jwt";
+import { hasRole } from "./app/utils/auth";
 
 export async function middleware(req: NextRequest) {
   console.log("Middleware called", req.nextUrl.pathname);
@@ -34,22 +35,27 @@ export async function middleware(req: NextRequest) {
     return response;
   }
 
-  const newAccessToken = await generateAccessToken({
-    userId: decodedRefreshToken.userId,
-    email: decodedRefreshToken.email,
-    role: decodedRefreshToken.role,
-  });
+  if (decodedRefreshToken) {
+    const newAccessToken = await generateAccessToken({
+      userId: decodedRefreshToken.userId,
+      email: decodedRefreshToken.email,
+      role: decodedRefreshToken.role,
+    });
+    const verifiedNewAccessToken = await verifyAccessToken(newAccessToken);
 
-  console.log("New Access Token:", newAccessToken);
+    const response = NextResponse.next();
+    response.cookies.set("accessToken", newAccessToken, {
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 1,
+    });
+    if (!hasRole(verifiedNewAccessToken.role, ["admin", "user"])) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
 
-  const response = NextResponse.next();
-  response.cookies.set("accessToken", newAccessToken, {
-    httpOnly: true,
-    path: "/",
-    maxAge: 60 * 1,
-  });
-
-  return response;
+    return response;
+  }
+  return NextResponse.redirect(new URL("/login", req.url));
 }
 
 export const config = {
