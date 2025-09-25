@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
 import { getJWTSession, logout } from "@/lib/actions";
+import TanstackProvider from "@/providers/TanstackProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -66,7 +67,7 @@ export default async function RootLayout({
           )}
         </nav>
         <hr />
-        {children}
+        <TanstackProvider>{children}</TanstackProvider>
       </body>
     </html>
   );

@@ -7,6 +7,7 @@ import {
 import { hasRole } from "./app/utils/auth";
 
 export async function middleware(req: NextRequest) {
+  const url = req.nextUrl;
   console.log("Middleware called", req.nextUrl.pathname);
 
   const accessToken = req.cookies.get("accessToken")?.value;
@@ -55,9 +56,14 @@ export async function middleware(req: NextRequest) {
 
     return response;
   }
+
+  if (url.pathname.startsWith("/protected")) {
+    return NextResponse.redirect(new URL("/unauthorized", req.url));
+  }
+
   return NextResponse.redirect(new URL("/login", req.url));
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ["/dashboard/:path*", "/protected/:path*", "/about/:path*"],
 };

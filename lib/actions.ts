@@ -52,7 +52,7 @@ export async function authenticate(_state: unknown, formData: FormData) {
   cookies().set("accessToken", accessToken, {
     httpOnly: true,
     path: "/",
-    maxAge: 60 * 1, // 1 minute
+    maxAge: 60 * 15, // 1 minute
   });
 
   redirect("/dashboard");

@@ -1,0 +1,44 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "a title 1",
+      "body": "post 1 body"
+    },
+    {
+      "id": 2,
+      "title": "a title 2",
+      "body": "post 2 body"
+    },
+    {
+      "id": 3,
+      "title": "foo",
+      "body": "bar"
+    },
+    {
+      "id": 4,
+      "title": "foo",
+      "body": "bar"
+    },
+    {
+      "id": 5,
+      "title": "foo",
+      "body": "bar"
+    },
+    {
+      "id": 6,
+      "title": "foo",
+      "body": "bar"
+    },
+    {
+      "id": 7,
+      "title": "foo",
+      "body": "bar"
+    },
+    {
+      "id": 8,
+      "title": "foo",
+      "body": "bar"
+    }
+  ]
+}
