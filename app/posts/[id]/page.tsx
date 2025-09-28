@@ -7,6 +7,7 @@ import { Breadcrumb } from "antd";
 import SelectComponent from "@/app/components/SelectComponent";
 import { Slider, Switch } from "antd";
 import UploadComponent from "@/app/components/UploadComponent";
+import UploadWithPreview from "@/app/components/UploadWithPreview";
 
 export async function generateMetadata({ params }: { params: { id: number } }) {
   const post = await getPost(params.id);
@@ -38,6 +39,7 @@ export default async function PostPage({ params }: { params: { id: number } }) {
       <SelectComponent />
       {/* upload a picture */}
       <UploadComponent />
+      <UploadWithPreview />
     </>
   );
 }

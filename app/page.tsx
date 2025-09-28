@@ -1,12 +1,22 @@
 "use client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Button, DatePickerProps, FloatButton, Typography } from "antd";
+import {
+  Button,
+  Col,
+  DatePickerProps,
+  FloatButton,
+  Row,
+  Statistic,
+  StatisticProps,
+  Typography,
+} from "antd";
 import CarouselComponent from "./components/CarouselComponent";
 import CollapseComponent from "./components/CollapseComponent";
 import { UpOutlined } from "@ant-design/icons";
 import GridComponent from "./components/GridComponent";
 import { DatePicker, Space } from "antd";
 import { Dayjs } from "dayjs";
+import CountUp from "react-countup";
 
 const getYearMonth = (date: Dayjs) => date.year() * 12 + date.month();
 
@@ -79,6 +89,10 @@ export default function Home() {
   if (isError) return <div>Error...</div>;
   if (isFetched) console.log("fetched");
 
+  const formatter: StatisticProps["formatter"] = (value) => (
+    <CountUp end={value as number} separator="," />
+  );
+
   return (
     <main className="mt-6">
       <div>
@@ -123,6 +137,24 @@ export default function Home() {
         <Typography.Title level={5}>7 days range</Typography.Title>
         <DatePicker.RangePicker disabledDate={disabled7DaysDate} />
       </Space>
+
+      <Row gutter={16}>
+        <Col span={12}>
+          <Statistic
+            title="Active Users"
+            value={112893}
+            formatter={formatter}
+          />
+        </Col>
+        <Col span={12}>
+          <Statistic
+            title="Account Balance (CNY)"
+            value={112893}
+            precision={2}
+            formatter={formatter}
+          />
+        </Col>
+      </Row>
 
       <div className="mb-40">{/* extra space for float button */}</div>
       <FloatButton.BackTop
