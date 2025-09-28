@@ -7,10 +7,10 @@ import { generateAccessToken, generateRefreshToken } from "./jwt";
 import { jwtVerify } from "jose";
 import { hasRole } from "@/app/utils/auth";
 
-export async function authenticate(_state: unknown, formData: FormData) {
-  console.log("state", _state, "FORM DATA", formData.get("email"));
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+export async function authenticate(formData: any) {
+  console.log("Form data", formData);
+  const email = formData.email;
+  const password = formData.password;
 
   const user: User | undefined = users.find(
     (user: User) => user.email === email && user.password === password
@@ -19,15 +19,6 @@ export async function authenticate(_state: unknown, formData: FormData) {
   if (!user) {
     return "Invalid user";
   }
-  //----------- session based login----------- \\
-  // cookies().set("currentUser", JSON.stringify(user), {
-  //   httpOnly: true,
-  //   path: "/",
-  //   maxAge: 60 * 60, // 1h
-  // });
-  // redirect("/dashboard");
-
-  //---------- jwt based login--------------- \\
 
   if (!hasRole(user.role, ["admin", "user"])) {
     redirect("unauthorized");
@@ -63,11 +54,6 @@ export async function getSession() {
   return cookie ? JSON.parse(cookie) : null;
 }
 
-// export async function getJWTSession() {
-//   const cookie = cookies().get("accessToken")?.value;
-//   return cookie ? JSON.parse(cookie) : null;
-// }
-
 export async function getJWTSession() {
   const token = cookies().get("accessToken")?.value;
   if (!token) return null;
@@ -82,11 +68,6 @@ export async function getJWTSession() {
     return null;
   }
 }
-
-// export async function logout() {
-//   cookies().delete("currentUser");
-//   redirect("/");
-// }
 
 export async function logout() {
   cookies().delete("accessToken");

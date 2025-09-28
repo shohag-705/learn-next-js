@@ -24,21 +24,53 @@
       "id": 5,
       "title": "foo",
       "body": "bar"
+    }
+  ],
+  "photos": [
+    {
+      "albumId": 1,
+      "id": 1,
+      "title": "accusamus beatae ad facilis cum similique qui sunt",
+      "url": "https://via.placeholder.com/600/92c952",
+      "thumbnailUrl": "https://www.w3schools.com/html/img_girl.jpg"
     },
     {
-      "id": 6,
-      "title": "foo",
-      "body": "bar"
+      "albumId": 1,
+      "id": 2,
+      "title": "reprehenderit est deserunt velit ipsam",
+      "url": "https://via.placeholder.com/600/771796",
+      "thumbnailUrl": "https://www.w3schools.com/html/img_chania.jpg"
     },
     {
-      "id": 7,
-      "title": "foo",
-      "body": "bar"
+      "albumId": 1,
+      "id": 3,
+      "title": "officia porro iure quia iusto qui ipsa ut modi",
+      "url": "https://via.placeholder.com/600/24f355",
+      "thumbnailUrl": "https://www.w3schools.com/html/img_girl.jpg"
     },
     {
-      "id": 8,
-      "title": "foo",
-      "body": "bar"
+      "albumId": 1,
+      "id": 4,
+      "title": "culpa odio esse rerum omnis laboriosam voluptate repudiandae",
+      "url": "https://via.placeholder.com/600/d32776",
+      "thumbnailUrl": "https://www.w3schools.com/html/img_chania.jpg"
+    },
+    {
+      "albumId": 1,
+      "id": 19,
+      "title": "perferendis nesciunt eveniet et optio a",
+      "url": "https://via.placeholder.com/600/56acb2",
+      "thumbnailUrl": "https://www.w3schools.com/html/pic_trulli.jpg"
+    }
+  ],
+  "images": [
+    {
+      "id": "ca3f",
+      "name": "Screenshot from 2025-09-21 09-46-04.png",
+      "size": 40089,
+      "type": "image/png",
+      "path": "/uploads/Screenshot from 2025-09-21 09-46-04.png",
+      "uploadedAt": "2025-09-28T07:04:46.931Z"
     }
   ]
 }

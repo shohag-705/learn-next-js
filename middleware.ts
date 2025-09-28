@@ -48,7 +48,7 @@ export async function middleware(req: NextRequest) {
     response.cookies.set("accessToken", newAccessToken, {
       httpOnly: true,
       path: "/",
-      maxAge: 60 * 1,
+      maxAge: 60 * 60 * 24,
     });
     if (!hasRole(verifiedNewAccessToken.role, ["admin", "user"])) {
       return NextResponse.redirect(new URL("/login", req.url));

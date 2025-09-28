@@ -19,7 +19,7 @@ const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || "refreshtoken";
 export async function generateAccessToken(payload: object) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime("15m")
+    .setExpirationTime("1d")
     .sign(encoder.encode(ACCESS_TOKEN_SECRET));
 }
 

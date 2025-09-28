@@ -3,6 +3,7 @@ import "./globals.css";
 import Link from "next/link";
 import { getJWTSession, logout } from "@/lib/actions";
 import TanstackProvider from "@/providers/TanstackProvider";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +16,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const session = await getSession();
   const session = await getJWTSession();
 
   return (
@@ -67,7 +67,9 @@ export default async function RootLayout({
           )}
         </nav>
         <hr />
-        <TanstackProvider>{children}</TanstackProvider>
+        <AntdRegistry>
+          <TanstackProvider>{children}</TanstackProvider>
+        </AntdRegistry>
       </body>
     </html>
   );

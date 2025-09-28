@@ -1,4 +1,5 @@
 import { getPosts } from "@/lib/getPosts";
+import { Breadcrumb } from "antd";
 import Link from "next/link";
 
 type Post = {
@@ -12,7 +13,7 @@ export default async function Posts() {
   const posts = await getPosts();
   return (
     <div>
-      <h1>All posts</h1>
+      <Breadcrumb items={[{ title: <Link href="/posts">Posts</Link> }]} />
       <ul className="mt-6">
         {posts.map((post: Post) => (
           <li key={post.id} className="cursor-pointer">
