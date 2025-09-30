@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
 import { getJWTSession, logout } from "@/lib/actions";
+import TanstackProvider from "@/providers/TanstackProvider";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import AvatarPage from "./components/Avatar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +17,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const session = await getSession();
   const session = await getJWTSession();
 
   return (
@@ -55,10 +57,19 @@ export default async function RootLayout({
                 <Link href="/login">Login</Link>
               )}
             </li>
+            <li>
+              <Link href={"/charts"}>Charts</Link>
+            </li>
+            <li>
+              <Link href={"/shop"}>Shop</Link>
+            </li>
           </ul>
           {session?.email && (
-            <div className="text-sm text-gray-600">
-              Logged in as{" "}
+            <div
+              className="text-sm text-gray-600 flex items-center
+            gap-2"
+            >
+              Logged in as <AvatarPage size={36} />
               <span className="font-medium text-orange-300">
                 {session.email}
               </span>
@@ -66,7 +77,9 @@ export default async function RootLayout({
           )}
         </nav>
         <hr />
-        {children}
+        <AntdRegistry>
+          <TanstackProvider>{children}</TanstackProvider>
+        </AntdRegistry>
       </body>
     </html>
   );

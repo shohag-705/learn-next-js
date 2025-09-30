@@ -7,4 +7,5 @@ export type User = {
 export const users: User[] = [
   { id: 1, email: "admin@example.com", password: "1234", role: "admin" },
   { id: 2, email: "user@example.com", password: "1234", role: "user" },
+  { id: 3, email: "hacker@example.com", password: "1234", role: "hacker" },
 ];

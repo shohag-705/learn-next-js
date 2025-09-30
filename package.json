@@ -9,13 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.6.1",
+    "@ant-design/nextjs-registry": "^1.1.0",
+    "@tanstack/react-query": "^5.90.2",
+    "@tanstack/react-query-devtools": "^5.90.2",
     "jose": "^6.1.0",
+    "json-server": "^1.0.0-beta.3",
     "jsonwebtoken": "^9.0.2",
+    "mime": "^4.1.0",
     "next": "14.2.32",
     "react": "^18",
+    "react-countup": "^6.5.3",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.90.1",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/react": "^18",

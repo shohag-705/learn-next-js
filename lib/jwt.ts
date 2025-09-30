@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import { jwtVerify, SignJWT } from "jose";
 
 const encoder = new TextEncoder();
@@ -20,7 +19,7 @@ const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || "refreshtoken";
 export async function generateAccessToken(payload: object) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime("1m")
+    .setExpirationTime("1d")
     .sign(encoder.encode(ACCESS_TOKEN_SECRET));
 }
 
@@ -63,7 +62,7 @@ export async function verifyAccessToken(token: string) {
       token,
       encoder.encode(ACCESS_TOKEN_SECRET!)
     );
-    return payload; // decoded claims
+    return payload;
   } catch (e) {
     console.error("verifyAccessToken error:", e);
     return null;

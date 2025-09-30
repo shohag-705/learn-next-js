@@ -4,8 +4,10 @@ import {
   verifyAccessToken,
   verifyRefreshToken,
 } from "./lib/jwt";
+import { hasRole } from "./app/utils/auth";
 
 export async function middleware(req: NextRequest) {
+  const url = req.nextUrl;
   console.log("Middleware called", req.nextUrl.pathname);
 
   const accessToken = req.cookies.get("accessToken")?.value;
@@ -34,24 +36,34 @@ export async function middleware(req: NextRequest) {
     return response;
   }
 
-  const newAccessToken = await generateAccessToken({
-    userId: decodedRefreshToken.userId,
-    email: decodedRefreshToken.email,
-    role: decodedRefreshToken.role,
-  });
+  if (decodedRefreshToken) {
+    const newAccessToken = await generateAccessToken({
+      userId: decodedRefreshToken.userId,
+      email: decodedRefreshToken.email,
+      role: decodedRefreshToken.role,
+    });
+    const verifiedNewAccessToken = await verifyAccessToken(newAccessToken);
 
-  console.log("New Access Token:", newAccessToken);
+    const response = NextResponse.next();
+    response.cookies.set("accessToken", newAccessToken, {
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60 * 24,
+    });
+    if (!hasRole(verifiedNewAccessToken.role, ["admin", "user"])) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
 
-  const response = NextResponse.next();
-  response.cookies.set("accessToken", newAccessToken, {
-    httpOnly: true,
-    path: "/",
-    maxAge: 60 * 1,
-  });
+    return response;
+  }
 
-  return response;
+  if (url.pathname.startsWith("/protected")) {
+    return NextResponse.redirect(new URL("/unauthorized", req.url));
+  }
+
+  return NextResponse.redirect(new URL("/login", req.url));
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ["/dashboard/:path*", "/protected/:path*", "/about/:path*"],
 };
