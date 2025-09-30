@@ -57,6 +57,12 @@ export default async function RootLayout({
                 <Link href="/login">Login</Link>
               )}
             </li>
+            <li>
+              <Link href={"/charts"}>Charts</Link>
+            </li>
+            <li>
+              <Link href={"/shop"}>Shop</Link>
+            </li>
           </ul>
           {session?.email && (
             <div
