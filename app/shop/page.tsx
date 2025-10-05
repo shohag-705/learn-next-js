@@ -2,6 +2,7 @@
 import { Space, Typography } from "antd";
 import TreeSelectComponent from "../components/TreeSelectComponent";
 import TransferComponent from "../components/TransferComponent";
+import TourComponent from "../components/TourComponent";
 export default function Shop() {
   return (
     <>
@@ -9,6 +10,7 @@ export default function Shop() {
       <Space direction="vertical" size="large" style={{ width: "100%" }}>
         <TreeSelectComponent />
         <TransferComponent />
+        <TourComponent />
       </Space>
     </>
   );

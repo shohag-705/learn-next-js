@@ -8,6 +8,7 @@ interface RecordType {
   chosen: boolean;
 }
 export default function TransferComponent() {
+  const [oneWay, setOneWay] = useState(false);
   // const mockData = Array.from({ length: 20 }).map<RecordType>((_, i) => ({
   //   key: i.toString(),
   //   title: `content${i + 1}`,
@@ -160,7 +161,7 @@ export default function TransferComponent() {
         }}
         onSelectChange={onSelectChange}
         onScroll={onScroll}
-        // render={(item) => item.title}
+        render={(item) => item.title}
         disabled={disabled}
         showSearch
         filterOption={filterOption}
@@ -168,13 +169,20 @@ export default function TransferComponent() {
         onChange={handleChange}
         operations={["to right", "to left"]}
         footer={renderFooter}
-        render={renderItem}
+        // render={renderItem}
+        oneWay={oneWay}
+        pagination
       />
       <Switch
-        unCheckedChildren="disabled"
-        checkedChildren="disabled"
-        checked={disabled}
-        onChange={handleDisable}
+        // unCheckedChildren="disabled"
+        // checkedChildren="disabled"
+        // checked={disabled}
+        // onChange={handleDisable}
+
+        unCheckedChildren="one way"
+        checkedChildren="one way"
+        checked={oneWay}
+        onChange={setOneWay}
       />
     </>
   );

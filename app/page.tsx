@@ -4,6 +4,7 @@ import {
   Button,
   Col,
   DatePickerProps,
+  Divider,
   FloatButton,
   Row,
   Statistic,
@@ -17,6 +18,10 @@ import GridComponent from "./components/GridComponent";
 import { DatePicker, Space } from "antd";
 import { Dayjs } from "dayjs";
 import CountUp from "react-countup";
+import RatingComponent from "./components/RatingComponent";
+import SkeletonComponent from "./components/SkeletonComponent";
+import ResultComponent from "./components/ResultComponent";
+import SpinComponent from "./components/SpinComponent";
 
 const getYearMonth = (date: Dayjs) => date.year() * 12 + date.month();
 
@@ -155,6 +160,22 @@ export default function Home() {
           />
         </Col>
       </Row>
+      {/* rating  */}
+
+      <RatingComponent />
+
+      {/* Skeleton component */}
+      <SkeletonComponent />
+
+      <Divider />
+
+      {/* result section  */}
+
+      <ResultComponent />
+
+      <Divider />
+      {/* Spin component */}
+      <SpinComponent />
 
       <div className="mb-40">{/* extra space for float button */}</div>
       <FloatButton.BackTop
